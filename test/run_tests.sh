@@ -105,7 +105,7 @@ test_docker_run_usage() {
 
     printLine "Requesting page from container"
 
-	OUTPUT=$(curl -v -L --connect-timeout 5 --retry 50 --retry-delay 5 --retry-connrefuse http://0.0.0.0:8080/test.html)
+	OUTPUT=$(sleep 5 && curl -v -L --connect-timeout 5 --retry 50 --retry-delay 5 --retry-connrefuse http://0.0.0.0:8080/test.html)
 
 	if [[ "$OUTPUT" != *"$CHECK"* ]]; then
 	    printResult "error"
