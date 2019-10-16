@@ -8,7 +8,6 @@
 #
 IMAGE_NAME=${1:-aemdesign/nginx}
 FLAG_DEBUG=${2:-true}
-LOCAL_IP=$(/sbin/ip route | awk '/default/ { print $3 }')
 
 #debug(message,type[error,info,warning],newlinesiffix)
 function debug {
@@ -88,7 +87,7 @@ test_docker_run_usage() {
 	CHECK="test.html"
 	CONTAINER=$(docker run -p 8080:80 -d ${IMAGE_NAME})
 
-	OUTPUT=$(curl http://${LOCAL_IP}:8080/test.html)
+	OUTPUT=$(curl -s http://localhost:8080/test.html)
 
 	if [[ "$OUTPUT" != *"$CHECK"* ]]; then
 	    printResult "error"
