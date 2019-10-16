@@ -102,7 +102,7 @@ test_docker_run_usage() {
 
     printDebug "Requesting page from container"
 
-	OUTPUT=$(curl http://0.0.0.0:8080/test.html)
+	OUTPUT=$(curl --connect-timeout 20 --retry 5 --retry-delay 0 --retry-max-time 60 http://0.0.0.0:8080/test.html)
 
 	if [[ "$OUTPUT" != *"$CHECK"* ]]; then
 	    printResult "error"
