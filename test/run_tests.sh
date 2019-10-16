@@ -91,11 +91,16 @@ printDebug() {
 }
 
 test_docker_run_usage() {
-	printTitle "Testing 'docker run' usage"
+	printDebug "Testing 'docker run' usage"
 	CHECK="test.html"
-	CONTAINER=$(docker run -p 8080:80 -d ${IMAGE_NAME})
 
-    printDebug $(docker ps)
+	printDebug "Starting Container"
+
+	docker run -p 8080:80 -d ${IMAGE_NAME}
+
+    docker ps
+
+    printDebug "Requesting page from container"
 
 	OUTPUT=$(curl http://0.0.0.0:8080/test.html)
 
