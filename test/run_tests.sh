@@ -97,6 +97,8 @@ test_docker_run_usage() {
 
 	OUTPUT=$(curl http://${LOCAL_IP}:8080/test.html)
 
+    docker ps
+
 	if [[ "$OUTPUT" != *"$CHECK"* ]]; then
 	    printResult "error"
 	    printDebug "Image '${IMAGE_NAME}' test FAILED could not find ${CHECK} in output" "${OUTPUT}"
