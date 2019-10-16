@@ -80,6 +80,9 @@ function debug {
 printTitle() {
     echo -n ${1:-Test}
 }
+printLine() {
+    echo ${1:-Test}
+}
 printResult() {
     debug "${1:-fail}" "${1:-fail}"
 }
@@ -91,18 +94,18 @@ printDebug() {
 }
 
 test_docker_run_usage() {
-	printDebug "Testing 'docker run' usage"
+	printLine "Testing 'docker run' usage"
 	CHECK="test.html"
 
-	printDebug "Starting Container"
+	printLine "Starting Container"
 
 	docker run -p 8080:80 -d ${IMAGE_NAME}
 
     docker ps
 
-    printDebug "Requesting page from container"
+    printLine "Requesting page from container"
 
-	OUTPUT=$(curl --connect-timeout 20 --retry 5 --retry-delay 0 --retry-max-time 60 http://0.0.0.0:8080/test.html)
+	OUTPUT=$(curl -v -L --connect-timeout 5 --retry 50 --retry-delay 5 http://0.0.0.0:8080/test.html)
 
 	if [[ "$OUTPUT" != *"$CHECK"* ]]; then
 	    printResult "error"
